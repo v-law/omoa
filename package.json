@@ -1,0 +1,19 @@
+{
+  "name": "omoa",
+  "version": "1.0.0",
+  "description": "online museum of art -- curate your own museum by adding paintings with automated museum labels",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/v-law/omoa.git"
+  },
+  "author": "Vernita Lawren",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/v-law/omoa/issues"
+  },
+  "homepage": "https://github.com/v-law/omoa#readme"
+}
