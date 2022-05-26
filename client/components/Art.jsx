@@ -1,67 +1,34 @@
 import React, { Component } from 'react';
-import { Link } from 'react-router-dom';
+import { connect } from 'react-redux';
 
 import ArtDisplay from './ArtDisplay.jsx';
 
-class Art extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      fetchedArt: false,
-      art: [],
-    };
+const mapStateToProps = state => ({
+  // add pertinent state here
+  artList: state.art.artList,
+});
+
+const Art = props => {
+  const exhibit = props.artList
+  const exhibitElems = new Array(9);
+  for (let i = 0; i < 9; i++) {
+    if (exhibitElems[i] == null) {
+      exhibitElems[i] = (<article className="artDisplay" id={`article${i}`} key={i}></article>);
+    } else exhibitElems[i] = (<ArtDisplay exhibitID={exhibitID} id={`article${i}`} key={i} />);
   }
 
-  componentDidMount() {
-    fetch('/api/')
-      .then(res => res.json())
-      .then((art) => {
-        if (!Array.isArray(art)) art = [];
-        return this.setState({
-          art,
-          fetchedArt: true
-        });
-      })
-      .catch(err => console.log('Art.componentDidMount: get art: ERROR: ', err));
-  }
-
-  render() {
-    if (!this.state.fetchedArt) return (
-      <div>
-        <h1>Loading data, please wait...</h1>
+  return (
+    <div className="container">
+      <div className="exhibitContainer">
+        {exhibitElems}
       </div>
-    );
+      <div className="curateBtnContainer">
+        <button type="button" className="routeButton" onClick={event =>  window.location.href='/curate'}>
+          Curate Exhibit
+        </button>
+      </div>
+    </div>
+  );
+};
 
-    const { art } = this.state;
-
-    if (!art) return null;
-
-    if (!art.length) return (
-      <div>this exhibit is empty</div>
-    );
-
-    const artElems = art.map((a, i) => {
-      return (
-        <ArtDisplay
-          key={i}
-          info={a}
-        />
-      );
-    });
-
-    return (
-      <section className="mainSection">
-        <header className="pageHeader">
-          <Link to={'/curate'}>
-            <button type="button" className="btnSecondary">Curate</button>
-          </Link>
-        </header>
-        <div className="artContainer">
-          {artElems}
-        </div>
-      </section>
-    );
-  }
-}
-
-export default Art;
+export default connect(mapStateToProps, null)(Art);

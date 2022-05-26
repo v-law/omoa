@@ -1,15 +1,33 @@
 import React, { Component } from 'react';
-import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 
 import Art from './Art.jsx';
-// import CurateArt from './components/CurateArt';
+import CurateArt from './CurateArt.jsx';
 
 const App = props => {
-  return (
-    <div className="router">
-      <main>
-        <Router><Layout><Routes>
-          <Route
+  const pathname = window.location.pathname;
+  if (pathname === '/') {
+    return (
+      <div>
+        <main>
+          <Art />
+        </main>
+      </div>
+    );
+  }
+  else if (pathname === '/curate') {
+    return (
+      <div>
+        <main>
+          <CurateArt />
+        </main>
+      </div>
+    );
+  } else {
+    return (
+      <div>
+        <main>
+          <h5>this exhibit is under construction</h5>
+          {/* <Route
             exact
             path="/"
             component={Art}
@@ -18,11 +36,11 @@ const App = props => {
             exact
             path="/curate"
             component={CurateArt}
-          />
-        </Routes></Layout></Router>
-      </main>
-    </div>
-  );
+          /> */}
+        </main>
+      </div>
+    );
+  }
 };
 
 export default App;

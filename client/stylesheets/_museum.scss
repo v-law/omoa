@@ -1,9 +1,57 @@
-body {
+html, body {
+  overflow: hidden;
   background: $lightbrown;
 }
 
-h1, h2 {
+h1,h2, h5 {
   text-align: center;
   padding: 0;
   margin: 0;
+  color: $darkbrown;
+}
+
+.container {
+  margin-top: 20px;
+  padding: 5px;
+}
+
+.exhibitContainer {
+  color: $blue;
+  background-color: $mediumbrown;
+  display: grid;
+  grid-template: "aa ab ac" auto
+                 "ba bb bc" auto
+                 "ca cb cd" auto / auto auto auto;
+  gap: 10px;
+}
+
+article {
+  min-height: 18vw;
+}
+
+.artImgContainer {
+  border: 1px solid $blue;
+  justify-self: center;
+  align-self: center;
+}
+
+.artDetail {
+  text-align: left;
+}
+
+.curateBtnContainer {
+  margin-top: 15px;
+  display: flex;
+  justify-content: end;
+  align-items: end;
+}
+
+.routeButton {
+  text-align:center;
+  background-color: $blue;
+  color: $lightbrown;
+  font-size: 15px;
+  padding: 8px;
+  border-radius: 10px;
+  border: none;
 }
