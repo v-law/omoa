@@ -5,7 +5,7 @@ fetch('/api/')
   .then(res => res.json())
   .then((info) => {
     for (let i = 0; i < 9; i++) {
-      artList[i] = info[i].art_id;
+      artList[info[i]._id - 1] = info[i].art_id;
     }
     console.log(artList);
   })
@@ -15,6 +15,7 @@ let newLocation = -1;
 for (let i = 0; i < 9; i++) {
   if (!artList[i]) {
     newLocation = i;
+    break;
   }
 }
 
@@ -63,6 +64,7 @@ const artReducer = async (state = initialState, action) => {
       for (let i = 0; i < 9; i++) {
         if (!artList[i]) {
           newLocation = i;
+          break;
         }
       }
       return {

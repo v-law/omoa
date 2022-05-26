@@ -1,9 +1,8 @@
-import { createStore } from 'redux';
+import { legacy_createStore } from 'redux';
 import { composeWithDevTools } from 'redux-devtools-extension';
 import reducers from './reducers/index';
 
-// add composeWithDevTools to get easy access to the Redux dev tools
-const store = createStore(
+const store = legacy_createStore(
   reducers,
   composeWithDevTools()
 );

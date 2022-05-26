@@ -9,13 +9,14 @@ const mapStateToProps = state => ({
 });
 
 const Art = props => {
+  console.log(props);
   const exhibit = props.artList
   const exhibitElems = new Array(9);
-  for (let i = 0; i < 9; i++) {
-    if (exhibitElems[i] == null) {
-      exhibitElems[i] = (<article className="artDisplay" id={`article${i}`} key={i}></article>);
-    } else exhibitElems[i] = (<ArtDisplay exhibitID={exhibitID} id={`article${i}`} key={i} />);
-  }
+  // for (let i = 0; i < 9; i++) {
+  //   if (exhibit[i] == null) {
+  //     exhibitElems[i] = (<article className="artDisplay" id={`article${i}`} key={i}>empty</article>);
+  //   } else {exhibitElems[i] = (<ArtDisplay exhibitID={exhibitID} id={`article${i}`} key={i} />)};
+  // }
 
   return (
     <div className="container">
