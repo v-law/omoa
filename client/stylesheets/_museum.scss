@@ -20,6 +20,9 @@ body {
   flex: 1 1 auto;
   min-height: 0;
 }
+main {
+  height: 100%;
+}
 
 h1,h2, h5 {
   text-align: center;
@@ -43,14 +46,15 @@ h1,h2, h5 {
 }
 
 .exhibitContainer {
-  height: 80%;
-  color: $blue;
   background-color: $mediumbrown;
+  color: $blue;
   display: grid;
   grid-template: "aa ab ac" 1fr
-                 "ba bb bc" 1fr
-                 "ca cb cd" 1fr / 1fr 1fr 1fr;
+  "ba bb bc" 1fr
+  "ca cb cd" 1fr / 1fr 1fr 1fr;
   gap: 10px;
+  padding-top: 10px;
+  padding-bottom: 10px;
 }
 
 article {
@@ -58,13 +62,12 @@ article {
 }
 
 .artImgContainer {
-  padding-top: 10px;
   box-sizing: border-box;
   justify-self: center;
   align-self: center;
   img {
     object-fit: scale-down;
-    max-height: 250px;
+    max-height: 200px;
     width: auto;
     display:block;
     margin:auto;
@@ -99,4 +102,9 @@ article {
   padding: 8px;
   border-radius: 10px;
   border: none;
+}
+
+.curatecontainer {
+  margin-top: 15px;
+  margin-left: 50px;
 }

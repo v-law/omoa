@@ -17,28 +17,26 @@ const App = props => {
   // else if (pathname === '/curate') { component = (<CurateArt />); }
   // else { component = (<h5>this exhibit is under construction</h5>) }
   return (
-    <div>
-      <main>
-        {/* {component} */}
-        <Routes>
-          <Route
-            exact
-            path="/"
-            element={<Welcome />}
-          />
-          <Route
-            exact
-            path="/exhibit"
-            element={<Art />}
-          />
-          <Route
-            exact
-            path="/curate"
-            element={<CurateArt />}
-          />
-        </Routes>
-      </main>
-    </div>
+    <main>
+      {/* {component} */}
+      <Routes>
+        <Route
+          exact
+          path="/"
+          element={<Welcome />}
+        />
+        <Route
+          exact
+          path="/exhibit"
+          element={<Art />}
+        />
+        <Route
+          exact
+          path="/curate"
+          element={<CurateArt />}
+        />
+      </Routes>
+    </main>
   );
 };
 

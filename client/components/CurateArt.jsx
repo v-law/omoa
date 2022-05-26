@@ -1,4 +1,5 @@
 import React, { Component, useState, useEffect } from 'react';
+import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 // import actions from action creators file
 import * as actions from '../actions/actions';
@@ -17,38 +18,38 @@ const mapDispatchToProps = dispatch => ({
 });
 
 const CurateArt = props => {
-  const {artList, newLocation} = props;
+  const { artList, newLocation } = props;
   let divAddArt;
   if (props.newLocation > -1) {
     divAddArt = (<div className="curatecontainer">
-    Search: <input type="text" id='searchinput' />
-    <button onClick={async () => {
-      const query = document.querySelector('#searchinput').value;
-      const objectID = await fetch(`https://collectionapi.metmuseum.org/public/collection/v1/search?hasImages=true&q=${query.split(' ').join('+')}`)
-        .then(res => res.json())
-        .then(data => {
-          for (let i = 0; i < data.objectIDs.length; i++) {
-            if (data.objectIDs[i].primaryImage.length > 0) return data.objectIDs[i];
-          }
-        })
-        .catch(err => console.log('artReducer.ADD_ART: Met API search query: ERROR: ', err));
-      const info = await fetch(`https://collectionapi.metmuseum.org/public/collection/v1/objects/${objectID}`)
-        .then(res => res.json())
-        .then(data => {
-          return data;
-        })
-        .catch(err => console.log('artReducer.ADD_ART: Met API objectID query: ERROR: ', err));
-      const artId = await fetch('/api/art', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        body: [JSON.stringify(info), state.newLocation]
-      });
-      props.addArtActionCreator(artId);
-      document.querySelector('#searchinput').value = '';
-    }}>Add Art</button>
-  </div>)
+      Search: <input type="text" id='searchinput' />
+      <button onClick={async () => {
+        const query = document.querySelector('#searchinput').value;
+        const objectID = await fetch(`https://collectionapi.metmuseum.org/public/collection/v1/search?hasImages=true&q=${query.split(' ').join('+')}`)
+          .then(res => res.json())
+          .then(data => {
+            for (let i = 0; i < data.objectIDs.length; i++) {
+              if (data.objectIDs[i].primaryImage.length > 0) return data.objectIDs[i];
+            }
+          })
+          .catch(err => console.log('artReducer.ADD_ART: Met API search query: ERROR: ', err));
+        const info = await fetch(`https://collectionapi.metmuseum.org/public/collection/v1/objects/${objectID}`)
+          .then(res => res.json())
+          .then(data => {
+            return data;
+          })
+          .catch(err => console.log('artReducer.ADD_ART: Met API objectID query: ERROR: ', err));
+        const artId = await fetch('/api/art', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: [JSON.stringify(info), state.newLocation]
+        });
+        props.addArtActionCreator(artId);
+        document.querySelector('#searchinput').value = '';
+      }}>Add Art</button>
+    </div>)
   } else {
     divAddArt = (<div className="curatecontainer">
       Your exhibit is currently full! Remove art to add more.
@@ -57,9 +58,14 @@ const CurateArt = props => {
 
   return (
     <div className="container">
-      <div className="curatecontainer">
-        {divAddArt}
+      <div className="btnContainer">
+        <Link to={'/exhibit'}>
+          <button type="button" className="routeButton">
+            Back to Exhibit
+          </button>
+        </Link>
       </div>
+      {divAddArt}
       <div className="curatecontainer">
         Move Placement of Box: <input type="text" id='placementfrominput' /> to <input type="text" id='placementtoinput' />
         <button onClick={() => {
