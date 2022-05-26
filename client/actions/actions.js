@@ -1,9 +1,14 @@
 // import actionType constants
 import * as types from '../constants/actionTypes';
 
-const addArtActionCreator = objectId => ({
+const initArtActionCreator = artList => ({
+  type: types.INIT_ART,
+  payload: artList,
+});
+
+const addArtActionCreator = artId => ({
   type: types.ADD_ART,
-  payload: objectId,
+  payload: artId,
 });
 
 const setNewPlacementActionCreator = placement => ({
@@ -16,4 +21,4 @@ const deleteArtActionCreator = exhibitId => ({
   payload: exhibitId,
 });
 
-export {addArtActionCreator, setNewPlacementActionCreator, deleteArtActionCreator};
+export {initArtActionCreator, addArtActionCreator, setNewPlacementActionCreator, deleteArtActionCreator};

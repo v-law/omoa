@@ -1,10 +1,9 @@
-import { legacy_createStore } from 'redux';
-import { composeWithDevTools } from 'redux-devtools-extension';
-import reducers from './reducers/index';
+import { configureStore } from '@reduxjs/toolkit';
+// import reducers from './reducers/index';
+import artReducer from './reducers/artReducer';
 
-const store = legacy_createStore(
-  reducers,
-  composeWithDevTools()
-);
+const store = configureStore({
+  reducer: {art: artReducer,},
+});
 
 export default store;

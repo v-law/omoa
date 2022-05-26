@@ -32,8 +32,9 @@ if (process.env.NODE_ENV && process.env.NODE_ENV.trim() === 'production') {
   app.get('/', (req, res) => {
     return res.status(200).sendFile(path.join(__dirname, '../index.html'));
   });
-
-  
+  app.get('/exhibit', (req, res) => {
+    return res.status(200).sendFile(path.join(__dirname, '../index.html'));
+  });
   app.get('/curate', (req, res) => {
     return res.status(200).sendFile(path.join(__dirname, '../index.html'));
   });

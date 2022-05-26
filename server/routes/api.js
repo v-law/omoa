@@ -11,7 +11,7 @@ router.get('/',
 
 router.get('/art',
   artController.getArt,
-  (req, res) => res.status(200).json(res.locals.art)
+  (req, res) => res.status(200).json(res.locals.art._id)
 );
 
 router.post('/art',

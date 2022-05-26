@@ -1,66 +1,54 @@
 import * as types from '../constants/actionTypes';
 
-const artList = new Array(9);
-fetch('/api/')
-  .then(res => res.json())
-  .then((info) => {
-    for (let i = 0; i < 9; i++) {
-      artList[info[i]._id - 1] = info[i].art_id;
-    }
-    console.log(artList);
-  })
-  .catch(err => console.log('artReducer.getArtList: get art list: ERROR: ', err));
+// const artList = new Array(9).fill(null);
+// fetch('/api/')
+//   .then(res => res.json())
+//   .then((info) => {
+//     for (let i = 0; i < 9; i++) {
+//       artList[info[i]._id - 1] = info[i].art_id;
+//     }
+//     console.log('initartList: ', artList);
+//   })
+//   .catch(err => console.log('artReducer.getArtList: get art list: ERROR: ', err));
 
-let newLocation = -1;
-for (let i = 0; i < 9; i++) {
-  if (!artList[i]) {
-    newLocation = i;
-    break;
-  }
-}
+// let newLocation = -1;
+// for (let i = 0; i < 9; i++) {
+//   if (!artList[i]) {
+//     newLocation = i;
+//     break;
+//   }
+// }
 
 const initialState = {
-  artList: artList,
-  newLocation: newLocation,
+  artList: new Array(9).fill(null),
+  newLocation: -1,
 };
 
-const artReducer = async (state = initialState, action) => {
+const artReducer = (state = initialState, action) => {
+  let newLocation;
+  let artList;
 
   switch (action.type) {
+    case types.INIT_ART:
+      newLocation = -1;
+      artList = action.payload;
+      for (let i = 0; i < 9; i++) {
+        if (!artList[i]) {
+          newLocation = i;
+          break;
+        }
+      }
+      console.log('new state: ', artList, newLocation);
+      return {
+        ...state,
+        artList,
+        newLocation,
+      }
+
     case types.ADD_ART:
-      const query = action.payload;
-      const objectID = await fetch(`https://collectionapi.metmuseum.org/public/collection/v1/search?hasImages=true&q=${query.split(' ').join('+')}`)
-        .then(res => res.json())
-        .then(data => {
-          for (let i = 0; i < data.objectIDs.length; i++) {
-            if (data.objectIDs[i].primaryImage.length > 0) return data.objectIDs[i];
-          }
-        })
-        .catch(err => console.log('artReducer.ADD_ART: Met API search query: ERROR: ', err));
-      const info = await fetch(`https://collectionapi.metmuseum.org/public/collection/v1/objects/${objectID}`)
-        .then(res => res.json())
-        .then(data => {
-          return data;
-        })
-        .catch(err => console.log('artReducer.ADD_ART: Met API objectID query: ERROR: ', err));
-      await fetch('/api/art', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        body: [JSON.stringify(info), state.newLocation]
-      });
-      const artList = new Array(9);
-      fetch('/api/')
-        .then(res => res.json())
-        .then((info) => {
-          for (let i = 0; i < 9; i++) {
-            artList[i] = info[i].art_id;
-          }
-          console.log(artList);
-        })
-        .catch(err => console.log('artReducer.getArtList: get art list: ERROR: ', err));
-      let newLocation = -1;
+      artList = state.artList.slice();
+      artList[state.newLocation] = action.payload;
+      newLocation = -1;
       for (let i = 0; i < 9; i++) {
         if (!artList[i]) {
           newLocation = i;
@@ -72,6 +60,7 @@ const artReducer = async (state = initialState, action) => {
         artList,
         newLocation,
       }
+
     case types.SET_NEW_PLACEMENT:
 
 

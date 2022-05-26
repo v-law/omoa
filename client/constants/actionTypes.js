@@ -1,3 +1,5 @@
+export const INIT_ART = 'INIT_ART';
+
 export const ADD_ART = 'ADD_ART';
 
 export const SET_NEW_PLACEMENT = 'SET_NEW_PLACEMENT';
