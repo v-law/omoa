@@ -32,12 +32,12 @@ if (process.env.NODE_ENV && process.env.NODE_ENV.trim() === 'production') {
   app.get('/', (req, res) => {
     return res.status(200).sendFile(path.join(__dirname, '../index.html'));
   });
-  app.get('/exhibit', (req, res) => {
-    return res.status(200).sendFile(path.join(__dirname, '../index.html'));
-  });
-  app.get('/curate', (req, res) => {
-    return res.status(200).sendFile(path.join(__dirname, '../index.html'));
-  });
+  // app.get('/exhibit', (req, res) => {
+  //   return res.status(200).sendFile(path.join(__dirname, '../index.html'));
+  // });
+  // app.get('/curate', (req, res) => {
+  //   return res.status(200).sendFile(path.join(__dirname, '../index.html'));
+  // });
   
   // catch-all route handler for any requests to an unknown route
   app.use((req, res) => res.status(404).send('This is not the page you\'re looking for...'));

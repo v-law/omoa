@@ -1,9 +1,16 @@
 const db = require('../models/artModels');
 
+const createErr = (errInfo) => {
+  const { method, type, err } = errInfo;
+  return {
+    log: `StudentController.${method} ${type}: ERROR: ${typeof err === 'object' ? JSON.stringify(err) : err}`,
+    message: { err: `Error occurred in StudentController.${method}. Check server logs for more details.` }
+  };
+};
+
 const artController = {};
 
 artController.getExhibit =  async (req, res, next) => {
-  // write code here
   const text = 'SELECT * FROM exhibit;';
 
   await db.query(text)
@@ -12,26 +19,28 @@ artController.getExhibit =  async (req, res, next) => {
       res.locals.exhibit = response.rows;
       return next();
     }).catch (err => {
-      return next(err);
+      return next(createErr({
+        method: 'getExhibit',
+        type: 'when recieving exhibit data from the request',
+        err: err,
+      }));
     });
 };
 
 artController.getArt = async (req, res, next) => {
-  // write code here
   const {id} = req.query;
-  const text = `SELECT 
-   art.primaryImage AS src, 
-   art.title, 
-   art.artist, 
-   art.culture, 
-   art.period, 
-   art.artistDisplayName,
-   art.artistDisplayBio,
-   art.medium,
-   art.dimensions,
-   art.objectID
-   FROM exhibit LEFT JOIN art ON exhibit.art_id = art._id 
-   WHERE exhibit._id=${id};`;
+  const text = `SELECT
+   "primaryImage" AS "src", 
+   "title",
+   "culture", 
+   "period", 
+   "artistDisplayName",
+   "artistDisplayBio",
+   "medium",
+   "dimensions",
+   "objectID"
+   FROM "public"."art"
+   WHERE "art"."_id"=${parseInt(id)};`
 
   await db.query(text)
     .then ((response) => {
@@ -39,12 +48,15 @@ artController.getArt = async (req, res, next) => {
       res.locals.art = response.rows[0];
       return next();
     }).catch (err => {
-      return next(err);
+      return next(createErr({
+        method: 'getArt',
+        type: 'when recieving art data from the request',
+        err: err,
+      }));
     });
 };
 
 artController.addExhibit = async (req, res, next) => {
-  // write code here
   console.log('req.body', req.body);
   const body = req.body;
   const text = `UPDATE exhibit SET art_id=${body[0].objectID} 
@@ -56,16 +68,17 @@ artController.addExhibit = async (req, res, next) => {
     .then (() => {
       return next();
     }).catch (err => {
-      return next(err);
+      return next(createErr({
+        method: 'addExhibit',
+        type: 'when updating exhibit data',
+        err: err,
+      }));
     });
 };
 
 artController.addArt = async (req, res, next) => {
-  // write code here
   console.log('req.body', req.body);
   const body = req.body[0];
-//   INSERT INTO TABLE_NAME (column1, column2, column3,...columnN)
-// VALUES (value1, value2, value3,...valueN);
   const text = `INSERT INTO art(primaryImage, title, artist, 
     culture, period, artistDisplayName, 
     artistDisplayBio, medium, dimensions, objectID) 
@@ -78,7 +91,11 @@ artController.addArt = async (req, res, next) => {
     .then (() => {
       return next();
     }).catch (err => {
-      return next(err);
+      return next(createErr({
+        method: 'addArt',
+        type: 'when updating art data',
+        err: err,
+      }));
     });
 };
 

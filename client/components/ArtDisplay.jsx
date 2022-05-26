@@ -1,27 +1,22 @@
-import React from 'react';
+import React, { Component } from 'react';
 
-const ArtDisplay = props => {
-
-  fetch(`/api/art?id=${props.exhibitID}`)
-    .then(res => res.json())
-    .then(info => {
-      const { src, title, artist, culture, period, artistDisplayName, artistDisplayBio, medium, dimensions } = info;
-    })
-    .catch(err => console.log('ArtDisplay: get display info: ERROR: ', err));
+const ArtDisplay = (props) => {
+  // const data = fetch(`/api/art?id=${props.artId}`)
+  //   .then(res => res.json())
+  //   .catch(err => console.log('ArtDisplay: get display info: ERROR: ', err));
+  // console.log(data);
+  const {data} = props;
 
   return (
     <article className="artDisplay">
       <div className="artImgContainer">
-        <img className="charName" src={src}></img>
+        <img className="charName" src={data.src}></img>
       </div>
       <ul className="artLabel">
-        <li className="artDetail">Title: {title}</li>
-        <li className="artDetail">Artist: {artistDisplayName}</li>
-        <li className="artDetail">({artistDisplayBio})</li>
-        <li className="artDetail">Culture: {culture}</li>
-        <li className="artDetail">Period: {period}</li>
-        <li className="artDetail">Medium: {medium}</li>
-        <li className="artDetail">Dimensions: {dimensions}</li>
+        <li className="artDetail"><strong>{data.artistDisplayName}</strong> ({data.artistDisplayBio})</li>
+        <li className="artDetail"><strong><em>{data.title}</em></strong></li>
+        <li className="artDetail">{data.medium}</li>
+        <li className="artDetail"><em>{data.culture || ''} {data.period || ''} {data.dimensions}</em></li>
       </ul>
     </article>
   );

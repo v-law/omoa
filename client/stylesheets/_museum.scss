@@ -3,6 +3,24 @@ html, body {
   background: $lightbrown;
 }
 
+html {
+  height: 100%;
+}
+
+body {
+  min-height: 100vh;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+}
+.header {
+  flex: 0 1 auto;
+}
+.app {
+  flex: 1 1 auto;
+  min-height: 0;
+}
+
 h1,h2, h5 {
   text-align: center;
   padding: 0;
@@ -15,32 +33,59 @@ h1,h2, h5 {
   padding: 5px;
 }
 
+.welcomecontainer {
+  margin: 0;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  -ms-transform: translate(-50%, -50%);
+  transform: translate(-50%, -50%);
+}
+
 .exhibitContainer {
+  height: 80%;
   color: $blue;
   background-color: $mediumbrown;
   display: grid;
-  grid-template: "aa ab ac" auto
-                 "ba bb bc" auto
-                 "ca cb cd" auto / auto auto auto;
+  grid-template: "aa ab ac" 1fr
+                 "ba bb bc" 1fr
+                 "ca cb cd" 1fr / 1fr 1fr 1fr;
   gap: 10px;
 }
 
 article {
-  min-height: 18vw;
+  box-sizing: border-box;
 }
 
 .artImgContainer {
-  border: 1px solid $blue;
+  padding-top: 10px;
+  box-sizing: border-box;
   justify-self: center;
   align-self: center;
+  img {
+    object-fit: scale-down;
+    max-height: 250px;
+    width: auto;
+    display:block;
+    margin:auto;
+  }
 }
 
 .artDetail {
-  text-align: left;
+  display: flex;
+  justify-content: flex-end;
+  align-items: flex-end;
+  font-size: 9px;
+  text-align: right;
+}
+
+.artLabel {
+  list-style: none;
+  margin: 0;
 }
 
 .curateBtnContainer {
-  margin-top: 15px;
+  margin-top: 10px;
   display: flex;
   justify-content: end;
   align-items: end;

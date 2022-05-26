@@ -1,37 +1,21 @@
 import * as types from '../constants/actionTypes';
 
-// const artList = new Array(9).fill(null);
-// fetch('/api/')
-//   .then(res => res.json())
-//   .then((info) => {
-//     for (let i = 0; i < 9; i++) {
-//       artList[info[i]._id - 1] = info[i].art_id;
-//     }
-//     console.log('initartList: ', artList);
-//   })
-//   .catch(err => console.log('artReducer.getArtList: get art list: ERROR: ', err));
-
-// let newLocation = -1;
-// for (let i = 0; i < 9; i++) {
-//   if (!artList[i]) {
-//     newLocation = i;
-//     break;
-//   }
-// }
-
 const initialState = {
   artList: new Array(9).fill(null),
   newLocation: -1,
+  artDetails: {},
 };
 
 const artReducer = (state = initialState, action) => {
   let newLocation;
   let artList;
+  let artDetails;
 
   switch (action.type) {
     case types.INIT_ART:
       newLocation = -1;
-      artList = action.payload;
+      artList = action.payload[0];
+      artDetails = action.payload[1];
       for (let i = 0; i < 9; i++) {
         if (!artList[i]) {
           newLocation = i;
@@ -43,6 +27,7 @@ const artReducer = (state = initialState, action) => {
         ...state,
         artList,
         newLocation,
+        artDetails,
       }
 
     case types.ADD_ART:
