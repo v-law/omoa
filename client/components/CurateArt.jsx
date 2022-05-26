@@ -25,26 +25,19 @@ const CurateArt = props => {
       Search: <input type="text" id='searchinput' />
       <button onClick={async () => {
         const query = document.querySelector('#searchinput').value;
-        const objectID = await fetch(`https://collectionapi.metmuseum.org/public/collection/v1/search?hasImages=true&q=${query.split(' ').join('+')}`)
+        const search = await fetch(`https://collectionapi.metmuseum.org/public/collection/v1/search?hasImages=true&q=${query.split(' ').join('+')}`)
           .then(res => res.json())
-          .then(data => {
-            for (let i = 0; i < data.objectIDs.length; i++) {
-              if (data.objectIDs[i].primaryImage.length > 0) return data.objectIDs[i];
-            }
-          })
           .catch(err => console.log('artReducer.ADD_ART: Met API search query: ERROR: ', err));
-        const info = await fetch(`https://collectionapi.metmuseum.org/public/collection/v1/objects/${objectID}`)
-          .then(res => res.json())
-          .then(data => {
-            return data;
-          })
-          .catch(err => console.log('artReducer.ADD_ART: Met API objectID query: ERROR: ', err));
+        const details = await fetch(`https://collectionapi.metmuseum.org/public/collection/v1/objects/${search.objectIDs[0]}`)
+            .then(res => res.json())
+            .catch(err => console.log('artReducer.ADD_ART: Met API objectID query: ERROR: ', err));
+        console.log('details: ', details);
         const artId = await fetch('/api/art', {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json'
           },
-          body: [JSON.stringify(info), state.newLocation]
+          body: JSON.stringify([JSON.stringify(details), props.newLocation])
         });
         props.addArtActionCreator(artId);
         document.querySelector('#searchinput').value = '';
